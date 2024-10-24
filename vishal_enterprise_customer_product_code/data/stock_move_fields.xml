@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_stock_move_x_customer_product_code" model="ir.model.fields">
+        <field name="name">x_customer_product_code</field>
+        <field name="field_description">Customer Product Codes</field>
+        <field name="model_id" ref="stock.model_stock_move"/>
+        <field name="ttype">char</field>
+        <field name="depends">picking_id.partner_id,product_id,picking_id.origin</field> 
+        <field name="store" eval="True"/>
+        <field name="required" eval="False"/>
+        <field name="readonly" eval="True"/>
+        <field name="compute">
+for line in self:
+    origin = (line.picking_id.origin or "").lower()
+    
+    if origin.startswith("s"):
+        partner_products = line.picking_id.partner_id.x_product_ids
+        matching_product = None
+        for product in partner_products:
+            if product.x_product_id == line.product_id.product_tmpl_id:
+                matching_product = product
+                break
+        if matching_product:
+            line['x_customer_product_code'] = matching_product.x_customer_product_code
+        else:
+            line['x_customer_product_code'] = ""
+    
+    elif not origin:
+        partner_products = line.picking_id.partner_id.x_product_ids
+        matching_product = None
+        for product in partner_products:
+            if product.x_product_id == line.product_id.product_tmpl_id:
+                matching_product = product
+                break
+        if matching_product:
+            line['x_customer_product_code'] = matching_product.x_customer_product_code
+        else:
+            line['x_customer_product_code'] = ""
+    
+    elif origin.startswith("p"):
+        search_domain = [('name', '=',line.picking_id.origin)]
+        purchase_order = self.env['purchase.order'].search(search_domain,limit=1)
+        partner_products = purchase_order.dest_address_id.x_product_ids
+
+        matching_product = None
+        for product in partner_products:  
+          if product.x_product_id == line.product_tmpl_id:
+            matching_product = product
+          if matching_product:
+            line['x_customer_product_code'] = matching_product.x_customer_product_code
+          else: 
+            line['x_customer_product_code'] = "" 
+    else:
+        line['x_customer_product_code'] = ""
+        </field>
+    </record>
+</odoo>

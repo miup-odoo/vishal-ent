@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="automatic_unique_code_and_product_validation" model="base.automation">
+        <field name="name">[vishal enterprise customer product code] Automatic Unique Code And Product Validation</field>
+        <field name="model_id" ref="vishal_enterprise_customer_product_code.model_x_customer_product_code_details"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="trigger_field_ids" eval="[(6, 0, [
+            ref('vishal_enterprise_customer_product_code.field_product_code_details_x_customer_product_code'),
+            ref('vishal_enterprise_customer_product_code.field_product_code_details_x_product_ids')
+        ])]"/>
+        <field name="action_server_ids" eval="[Command.link(ref('vishal_enterprise_customer_product_code.action_unique_code_and_product_validation'))]"/>
+    </record> 
+</odoo>

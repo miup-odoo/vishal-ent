@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+vishal_enterprise_customer_product_code.access_product_code_detail,access_vishal_enterprise,vishal_enterprise_customer_product_code.model_x_customer_product_code_details,base.group_user,1,1,1,1

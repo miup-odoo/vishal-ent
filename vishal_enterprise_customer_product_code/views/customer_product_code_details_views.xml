@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="product_code_details_view_tree" model="ir.ui.view">
+        <field name="name">product.code.details.view.tree</field>
+        <field name="model">x_customer_product_code_details</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Product Code Details">
+                <field name="x_product_id"/>
+                <field name="x_customer_product_code"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

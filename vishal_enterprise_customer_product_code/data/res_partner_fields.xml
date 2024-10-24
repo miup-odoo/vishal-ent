@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_res_partner_x_product_ids" model="ir.model.fields">
+        <field name="name">x_product_ids</field>
+        <field name="field_description">Product Name</field>
+        <field name="ttype">one2many</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="relation">x_customer_product_code_details</field>
+        <field name="relation_field">x_customer_id</field>
+    </record>
+</odoo>

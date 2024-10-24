@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="sale_order_line_form_inherited" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree/field[@name='name']" position="after">
+                <field name="x_customer_product_code"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="sale_order_search_inherited" model="ir.ui.view">
+        <field name="name">sale.order.search.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='order_line']" position="after">
+            <field name="order_line" string="Customer Product Code" filter_domain="[('order_line.x_customer_product_code', 'ilike', self)]"/>
+           </xpath>
+        </field>
+    </record>
+</odoo>

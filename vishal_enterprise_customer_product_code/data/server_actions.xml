@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="action_unique_code_and_product_validation" model="ir.actions.server">
+        <field name="name">[vishal enterprise customer product code] Logic for Automatic Unique Code And Product Validation</field>
+        <field name="model_id" ref="vishal_enterprise_customer_product_code.model_x_customer_product_code_details"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+search_domain = [
+    ('x_customer_id', '=', record.x_customer_id.id),
+    ('x_product_id', '=', record.x_product_id.id),
+    ('id', '!=', record.id),
+]
+
+existing_product_count = env['x_customer_product_code_details'].search_count(search_domain)
+if existing_product_count > 0:
+    raise UserError(f"Can't add the same product multiple times: {record.x_product_id.name}")
+
+search_domain = [
+    ('x_customer_id', '!=', record.x_customer_id.id),
+    ('x_customer_product_code', '=', record.x_customer_product_code),
+    ('x_product_id', '=', record.x_product_id.id),
+]
+
+existing_product_code = env['x_customer_product_code_details'].search(search_domain)
+if existing_product_code:
+    raise UserError(f'Same Customer Product Code found on product: {existing_product_code.x_product_id.name} for customer: {existing_product_code.x_customer_id.name}')
+        ]]>
+        </field>
+    </record>
+</odoo>
